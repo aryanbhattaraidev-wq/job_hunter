@@ -1,0 +1,66 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=0.6in]{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\titlerule]
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+\setlist[itemize]{leftmargin=1.2em,itemsep=1pt,topsep=2pt,parsep=0pt}
+\begin{document}
+\begin{center}
+{\LARGE \textbf{\VAR{p.name|e}}}\\[2pt]
+\small \VAR{([p.location, p.phone, p.email] + p.links)|select|map('e')|join(' | ')}
+\end{center}
+\BLOCK{if p.summary}
+\section{Summary}
+\VAR{p.summary|e}
+\BLOCK{endif}
+\BLOCK{if skills}
+\section{Skills}
+\BLOCK{for cat, items in skills.items()}
+\textbf{\VAR{cat|e}}: \VAR{items|map('e')|join(', ')}\\
+\BLOCK{endfor}
+\BLOCK{endif}
+\BLOCK{if experience}
+\section{Experience}
+\BLOCK{for e, bs in experience}
+\textbf{\VAR{e.title|e}} \hfill \VAR{e.start|e}\BLOCK{if e.end} -- \VAR{e.end|e}\BLOCK{endif}\\
+\textit{\VAR{e.org|e}} \hfill \VAR{e.location|e}
+\begin{itemize}
+\BLOCK{for b in bs}
+\item \VAR{b.text|e}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endfor}
+\BLOCK{endif}
+\BLOCK{if projects}
+\section{Projects}
+\BLOCK{for e, bs in projects}
+\textbf{\VAR{e.org|e}}\BLOCK{if e.tech} \textit{(\VAR{e.tech|map('e')|join(', ')})}\BLOCK{endif}
+\begin{itemize}
+\BLOCK{for b in bs}
+\item \VAR{b.text|e}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endfor}
+\BLOCK{endif}
+\BLOCK{if p.education}
+\section{Education}
+\BLOCK{for ed in p.education}
+\textbf{\VAR{ed.school|e}} \hfill \VAR{ed.start|e}\BLOCK{if ed.end} -- \VAR{ed.end|e}\BLOCK{endif}\\
+\textit{\VAR{ed.degree|e}} \hfill \VAR{ed.location|e}\\[2pt]
+\BLOCK{endfor}
+\BLOCK{endif}
+\BLOCK{if p.extras}
+\section{Publications \& Certifications}
+\begin{itemize}
+\BLOCK{for x in p.extras}
+\item \VAR{x.text|e}
+\BLOCK{endfor}
+\end{itemize}
+\BLOCK{endif}
+\end{document}
