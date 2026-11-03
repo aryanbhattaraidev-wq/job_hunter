@@ -1,0 +1,14 @@
+.venv/
+data/
+.env
+*.egg-info/
+__pycache__/
+token.json
+credentials.json
+/tools/
+
+# personal / generated
+Aryan_Bhattarai_CV.pdf
+scratch_*.py
+*.pyc
+.pytest_cache/

@@ -1,0 +1,21 @@
+[project]
+name = "jobhunter"
+version = "0.1.0"
+description = "Free, local-first agentic job hunting and CV tailoring for anyone's resume"
+requires-python = ">=3.10"
+dependencies = ["httpx", "pydantic>=2", "typer", "rich", "pyyaml", "jinja2", "rapidfuzz", "pypdf", "feedparser", "streamlit", "selectolax", "truststore"]
+[project.optional-dependencies]
+gmail = ["google-api-python-client", "google-auth-oauthlib"]
+dev = ["pytest"]
+[project.scripts]
+jobhunter = "jobhunter.cli:app"
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.setuptools.package-data]
+jobhunter = ["cv/templates/*.j2"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
